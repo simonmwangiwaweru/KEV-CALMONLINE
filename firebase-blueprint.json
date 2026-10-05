@@ -1,0 +1,332 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User profile and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "systemSettings": {
+      "title": "SystemSettings",
+      "description": "Financial allocation, salary rules and system settings",
+      "type": "object",
+      "properties": {
+        "currency": { "type": "string" },
+        "currencySymbol": { "type": "string" },
+        "allocationBase": { "type": "string" },
+        "savingsPercentage": { "type": "number" },
+        "tithePercentage": { "type": "number" },
+        "companyReservePercentage": { "type": "number" },
+        "personalSalaryPercentage": { "type": "number" },
+        "operationsPercentage": { "type": "number" },
+        "salaryRuleType": { "type": "string" },
+        "salaryProfitPercentage": { "type": "number" },
+        "salaryWeeklyCap": { "type": "number" },
+        "monthlyGivingBudget": { "type": "number" },
+        "maxMonthlyPeopleSupported": { "type": "number" },
+        "weekStartDay": { "type": "number" },
+        "titheDay": { "type": "number" }
+      },
+      "required": ["currency", "currencySymbol", "savingsPercentage", "tithePercentage"]
+    },
+    "client": {
+      "title": "Client",
+      "description": "Client directory item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "organization": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "phone"]
+    },
+    "jobBooking": {
+      "title": "JobBooking",
+      "description": "Client job booking and tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientPhone": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "bookingDate": { "type": "string" },
+        "jobDate": { "type": "string" },
+        "agreedPrice": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "balanceRemaining": { "type": "number" },
+        "paymentStatus": { "type": "string" },
+        "status": { "type": "string" },
+        "directCosts": { "type": "array" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "clientId", "clientName", "serviceName", "agreedPrice", "paymentStatus", "status"]
+    },
+    "productSale": {
+      "title": "ProductSale",
+      "description": "Product retail/wholesale sale record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productName": { "type": "string" },
+        "sellingPrice": { "type": "number" },
+        "quantity": { "type": "number" },
+        "totalSalesAmount": { "type": "number" },
+        "productCost": { "type": "number" },
+        "transportCost": { "type": "number" },
+        "otherCosts": { "type": "number" },
+        "totalCost": { "type": "number" },
+        "netProfit": { "type": "number" },
+        "date": { "type": "string" },
+        "customerName": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "productName", "sellingPrice", "quantity", "totalSalesAmount", "netProfit", "date"]
+    },
+    "recurringClient": {
+      "title": "RecurringClient",
+      "description": "Monthly retainer client",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "clientName": { "type": "string" },
+        "phone": { "type": "string" },
+        "serviceProvided": { "type": "string" },
+        "monthlyAgreedAmount": { "type": "number" },
+        "paymentDueDay": { "type": "number" },
+        "lastPaymentDate": { "type": "string" },
+        "amountPaidThisMonth": { "type": "number" },
+        "isOverdue": { "type": "boolean" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "clientName", "serviceProvided", "monthlyAgreedAmount", "paymentDueDay"]
+    },
+    "dailyWorker": {
+      "title": "DailyWorker",
+      "description": "Daily casual or contracted labourer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string" },
+        "dailyAgreedPay": { "type": "number" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["id", "name", "role", "dailyAgreedPay", "active"]
+    },
+    "workerPaymentRecord": {
+      "title": "WorkerPaymentRecord",
+      "description": "Worker attendance and wage payment ledger",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "workerId": { "type": "string" },
+        "workerName": { "type": "string" },
+        "jobId": { "type": "string" },
+        "jobName": { "type": "string" },
+        "dateWorked": { "type": "string" },
+        "agreedPay": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "balanceRemaining": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentReference": { "type": "string" },
+        "notes": { "type": "string" },
+        "isPaid": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "workerId", "workerName", "dateWorked", "agreedPay", "amountPaid", "isPaid"]
+    },
+    "ledgerEntry": {
+      "title": "LedgerEntry",
+      "description": "Central multi-bucket financial transaction entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string" },
+        "account": { "type": "string" },
+        "bucket": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "referenceCode": { "type": "string" },
+        "relatedJobId": { "type": "string" },
+        "relatedClientId": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "amount", "type", "account", "bucket", "category", "description"]
+    },
+    "fixedExpenseBudget": {
+      "title": "FixedExpenseBudget",
+      "description": "Recurring monthly fixed expense envelope",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "monthlyLimit": { "type": "number" },
+        "spentThisMonth": { "type": "number" },
+        "dueDay": { "type": "number" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "name", "category", "monthlyLimit", "dueDay"]
+    },
+    "givingRequest": {
+      "title": "GivingRequest",
+      "description": "Accountability & triage for community financial help requests",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "personName": { "type": "string" },
+        "phone": { "type": "string" },
+        "date": { "type": "string" },
+        "amountRequested": { "type": "number" },
+        "reason": { "type": "string" },
+        "priority": { "type": "string" },
+        "recommendedAmount": { "type": "number" },
+        "amountGiven": { "type": "number" },
+        "decision": { "type": "string" },
+        "notes": { "type": "string" },
+        "monthKey": { "type": "string" },
+        "referenceCode": { "type": "string" }
+      },
+      "required": ["id", "personName", "date", "amountRequested", "reason", "priority", "decision"]
+    },
+    "weeklyCloseRecord": {
+      "title": "WeeklyCloseRecord",
+      "description": "Weekly financial discipline and review close",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "weekNumber": { "type": "number" },
+        "year": { "type": "number" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "status": { "type": "string" },
+        "totalIncome": { "type": "number" },
+        "totalDirectCosts": { "type": "number" },
+        "totalCompanyExpenses": { "type": "number" },
+        "netBusinessProfit": { "type": "number" },
+        "savingsExpected": { "type": "number" },
+        "savingsDeposited": { "type": "number" },
+        "titheExpected": { "type": "number" },
+        "tithePaid": { "type": "number" },
+        "titheVerified": { "type": "boolean" },
+        "salaryRecommended": { "type": "number" },
+        "salaryTransferred": { "type": "number" },
+        "companyRetained": { "type": "number" },
+        "checklist": { "type": "object" },
+        "isOverridden": { "type": "boolean" },
+        "closedAt": { "type": "string" }
+      },
+      "required": ["id", "weekNumber", "year", "startDate", "endDate", "status", "checklist"]
+    },
+    "activityTask": {
+      "title": "ActivityTask",
+      "description": "Daily scheduled activity or task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "priority": { "type": "string" },
+        "status": { "type": "string" },
+        "relatedClientId": { "type": "string" },
+        "relatedJobId": { "type": "string" },
+        "relatedName": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "title", "date", "priority", "status"]
+    },
+    "notificationItem": {
+      "title": "NotificationItem",
+      "description": "Actionable system notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "severity": { "type": "string" },
+        "date": { "type": "string" },
+        "read": { "type": "boolean" },
+        "actionUrl": { "type": "string" }
+      },
+      "required": ["id", "type", "title", "message", "severity", "date", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "User profile and metadata"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": "systemSettings",
+      "description": "User custom settings"
+    },
+    "/users/{userId}/clients/{clientId}": {
+      "schema": "client",
+      "description": "User client directory"
+    },
+    "/users/{userId}/jobs/{jobId}": {
+      "schema": "jobBooking",
+      "description": "User job bookings"
+    },
+    "/users/{userId}/products/{productId}": {
+      "schema": "productSale",
+      "description": "User product sales"
+    },
+    "/users/{userId}/recurring_clients/{recurringClientId}": {
+      "schema": "recurringClient",
+      "description": "User recurring retainer clients"
+    },
+    "/users/{userId}/workers/{workerId}": {
+      "schema": "dailyWorker",
+      "description": "User daily workers"
+    },
+    "/users/{userId}/worker_payments/{workerPaymentId}": {
+      "schema": "workerPaymentRecord",
+      "description": "User worker payment records"
+    },
+    "/users/{userId}/ledger/{ledgerId}": {
+      "schema": "ledgerEntry",
+      "description": "User multi-bucket transaction ledger"
+    },
+    "/users/{userId}/fixed_budgets/{budgetId}": {
+      "schema": "fixedExpenseBudget",
+      "description": "User fixed expense budget categories"
+    },
+    "/users/{userId}/giving_requests/{requestId}": {
+      "schema": "givingRequest",
+      "description": "User giving budget requests"
+    },
+    "/users/{userId}/weekly_closes/{closeId}": {
+      "schema": "weeklyCloseRecord",
+      "description": "User weekly close records"
+    },
+    "/users/{userId}/activities/{activityId}": {
+      "schema": "activityTask",
+      "description": "User daily activities and tasks"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "notificationItem",
+      "description": "User notifications"
+    }
+  }
+}

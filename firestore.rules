@@ -1,0 +1,104 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Catch-all deny to enforce zero-trust security
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Security Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Healthcheck / Connection test endpoint
+    match /test/connection {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // User document and private financial collections
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && isValidId(userId);
+      allow update: if isOwner(userId) && isValidId(userId);
+      allow delete: if isOwner(userId) && isValidId(userId);
+
+      // System Settings
+      match /settings/{settingId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(settingId);
+      }
+
+      // Clients
+      match /clients/{clientId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(clientId);
+      }
+
+      // Jobs
+      match /jobs/{jobId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(jobId);
+      }
+
+      // Products
+      match /products/{productId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(productId);
+      }
+
+      // Recurring Clients
+      match /recurring_clients/{recurringClientId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(recurringClientId);
+      }
+
+      // Daily Workers
+      match /workers/{workerId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(workerId);
+      }
+
+      // Worker Payments
+      match /worker_payments/{workerPaymentId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(workerPaymentId);
+      }
+
+      // Central Ledger
+      match /ledger/{ledgerId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(ledgerId);
+      }
+
+      // Fixed Budgets
+      match /fixed_budgets/{budgetId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(budgetId);
+      }
+
+      // Giving Requests
+      match /giving_requests/{requestId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(requestId);
+      }
+
+      // Weekly Closes
+      match /weekly_closes/{closeId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(closeId);
+      }
+
+      // Activities
+      match /activities/{activityId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(activityId);
+      }
+
+      // Notifications
+      match /notifications/{notificationId} {
+        allow read, write: if isOwner(userId) && isValidId(userId) && isValidId(notificationId);
+      }
+    }
+  }
+}

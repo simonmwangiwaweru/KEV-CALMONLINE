@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, "SF Pro Display", system-ui, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, Cambria, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  --ok: #15803d;
+  --pending: #b45309;
+  --alert: #b91c1c;
+  --line: rgba(15, 23, 42, 0.25);
+
+  --bg-image: url("/bg-clouds.webp");
+  --bg-fallback: #8bbceb;
+  --bg-gradient: linear-gradient(165deg, #7db3e8 0%, #a4cefa 35%, #cae5fd 70%, #e2f1ff 100%);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-active: rgba(255, 255, 255, 0.18);
+  --glass-lifted: rgba(255, 255, 255, 0.10);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.26);
+  --glass-blur: blur(5px) saturate(115%);
+  --glass-shadow: 0 8px 32px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  --glow: 0 0 20px rgba(255, 255, 255, 0.35);
+  --r-card: 28px; --r-tile: 16px; --r-pill: 999px;
+  --text: #0f172a;
+  --text-2: #1e293b;
+  --text-3: #334155;
+  --font: "Inter", -apple-system, "SF Pro Display", system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg-fallback);
+  background-image: var(--bg-gradient);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Photo layer - Fluffy clouds aesthetic: crystal clear */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: var(--bg-image) center 25% / cover no-repeat;
+  pointer-events: none;
+}
+
+/* Scrim layer: removed to let background image shine through with 100% clarity */
+body::after {
+  content: "";
+  display: none;
+}
+
+.glass--lifted {
+  background: var(--glass-lifted) !important;
+}
+
+/* Mobile: optimized mobile crop focused on clouds & sky */
+@media (max-width: 600px) {
+  :root {
+    --bg-image: url("/bg-clouds-mobile.webp");
+  }
+  body::before {
+    background-position: center 30%;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-panel,
+  .glass-card,
+  .glass-modal {
+    background: rgba(240,246,238,0.92) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* 2. GLASS SURFACE */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--r-card);
+}
+.glass--pill  { border-radius: var(--r-pill); }
+.glass--tile  { border-radius: var(--r-tile); }
+.glass.is-active, .is-active > .glass, .is-active.glass {
+  background: var(--glass-active) !important;
+  box-shadow: var(--glass-shadow), var(--glow) !important;
+  color: var(--text) !important;
+}
+
+/* Glass Panels, Cards, Modals mapping directly to Bonsai Master */
+.glass-panel {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--r-card);
+}
+
+.glass-card {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--r-card);
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 44px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.glass-modal {
+  background: rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.50);
+  border-radius: var(--r-card);
+  color: #0f172a;
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  color: #0f172a;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 160ms var(--ease-out);
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.60);
+  border-color: rgba(15, 23, 42, 0.40);
+  box-shadow: 0 0 12px rgba(15, 23, 42, 0.08), inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  outline: none;
+}
+
+.glass-pill {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  transition: all 160ms var(--ease-out);
+}
+
+.glass-pill:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #0f172a;
+}
+
+.glass-pill.is-active,
+.glass-pill-active {
+  background: var(--glass-active) !important;
+  box-shadow: var(--glass-shadow), var(--glow) !important;
+  color: #0f172a !important;
+  border-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 3. TYPOGRAPHY - High contrast crisp black & charcoal text */
+.t-title    { font-size: 15px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #0f172a; }
+.t-sub      { font-size: 14px; color: #334155; font-weight: 500; }
+.t-group    { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #0f172a; }
+.t-label    { font-size: 12px; color: #334155; font-weight: 600; }
+.t-caption  { font-size: 10.5px; color: #475569; text-align: center; font-weight: 500; }
+.t-readout  { font-size: 18px; font-weight: 700; color: #0f172a; }
+
+/* Text readability enforcement - ensure bottom text and labels never fade into background */
+.text-slate-500,
+.text-slate-400,
+.text-gray-500,
+.text-gray-400 {
+  color: var(--text-3);
+}
+
+.text-slate-600,
+.text-slate-700,
+.text-slate-800,
+.text-slate-900 {
+  color: var(--text);
+}
+
+.text-slate-300 {
+  color: var(--text-2);
+}
+
+/* 4. ICON BUTTON */
+.icon-btn {
+  width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer;
+  color: var(--text-2);
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 50%;
+  transition: all 160ms var(--ease-out);
+}
+.icon-btn:hover {
+  background: var(--glass-active);
+  color: var(--text);
+  box-shadow: var(--glass-shadow), var(--glow);
+  transform: scale(1.05);
+}
+.icon-btn:active {
+  transform: scale(0.95);
+}
+.icon-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 4. SLIDER */
+.glass-range,
+input[type="range"].glass-slider {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 99px;
+  background: linear-gradient(to right, rgba(255,255,255,.9) var(--val,50%), rgba(255,255,255,.45) var(--val,50%)); outline: none;
+}
+.glass-range::-webkit-slider-thumb,
+input[type="range"].glass-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 8px rgba(35,65,45,.3), 0 0 0 4px rgba(255,255,255,.2); cursor: pointer;
+  transition: transform 120ms var(--ease-out);
+}
+.glass-range::-moz-range-thumb,
+input[type="range"].glass-slider::-moz-range-thumb {
+  width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(35,65,45,.3);
+}
+.glass-range::-webkit-slider-thumb:active,
+input[type="range"].glass-slider::-webkit-slider-thumb:active {
+  transform: scale(1.15);
+}
+
+/* Flow tree */
+.flow-tree { width: 100%; height: auto; overflow: visible; }
+.tree-line  { fill: none; stroke: var(--line); stroke-linecap: round; stroke-linejoin: round; opacity: .75;
+              transition: stroke-width .6s ease; }
+.tree-trunk { stroke-width: 2.4; }
+.tree-ground { stroke: var(--line); stroke-width: 1; opacity: .5; }
+.tree-pad   { fill: rgba(255, 255, 255, 0.16); stroke: var(--line); stroke-width: 1.3; stroke-linejoin: round; opacity: .85;
+              transition: fill .4s ease, filter .4s ease, stroke .4s ease; }
+.tree-needles,
+.tree-needle-tips,
+.tree-stem  { fill: none; stroke: var(--line); stroke-linecap: round; stroke-linejoin: round; opacity: .7;
+              transition: stroke .4s ease, opacity .4s ease; }
+.tree-needles { stroke-width: 1; }
+.tree-needle-tips { stroke-width: 0.85; }
+.tree-stem  { stroke-width: 1.2; }
+
+.tree-label  { font: 600 10.5px var(--font); letter-spacing: .05em; fill: var(--text-3); }
+.tree-amount { font: 600 10.5px var(--font); fill: var(--text); font-variant-numeric: tabular-nums; }
+.tree-dot    { fill: var(--pending); }
+
+.tree-bucket.is-done .tree-pad    { fill: rgba(255,255,255,.65); stroke: var(--ok); filter: drop-shadow(0 0 10px rgba(95, 154, 116, 0.45)); }
+.tree-bucket.is-done .tree-needles,
+.tree-bucket.is-done .tree-needle-tips,
+.tree-bucket.is-done .tree-stem   { stroke: var(--ok); opacity: .95; }
+
+.tree-bucket.is-pending .tree-pad { stroke: var(--pending); filter: drop-shadow(0 0 8px rgba(217,164,65,.45)); }
+.tree-bucket.is-pending .tree-needles,
+.tree-bucket.is-pending .tree-needle-tips,
+.tree-bucket.is-pending .tree-stem { stroke: var(--pending); opacity: .85; }
+
+/* Weekly ring */
+.weekly-ring { display: grid; justify-items: center; gap: 8px; }
+.weekly-ring svg { width: 100%; max-width: 220px; height: auto; }
+.ring-track { fill: none; stroke: rgba(15, 23, 42, 0.12); stroke-width: 6; }
+.ring-fill  { fill: none; stroke: rgba(15, 23, 42, 0.80); stroke-width: 6; stroke-linecap: round;
+              transition: stroke-dashoffset .8s ease; }
+.ring-lock rect { fill: none; stroke: var(--text-2); stroke-width: 1.5; }
+.ring-lock .shackle { fill: none; stroke: var(--text-2); stroke-width: 1.5; stroke-linecap: round;
+                      transition: transform .4s ease; transform-origin: 5px -2px; }
+.ring-lock .shackle.is-open { transform: rotate(-35deg) translate(2px, -1px); }
+.ring-legend { display: flex; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.weekly-ring.is-complete   .ring-fill { stroke: var(--ok); }
+.weekly-ring.is-action     .ring-fill { stroke: var(--pending); }
+.weekly-ring.is-not_closed .ring-fill { stroke: var(--alert); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-line, .tree-pad, .ring-fill, .ring-lock .shackle { transition: none; }
+}
+
+/* Mobile: responsive adjustments */
+@media (max-width: 480px) {
+  .weekly-ring svg { max-width: 150px; }
+}
+
+/* Interactive tap feedback */
+button:not(:disabled),
+[role="button"],
+.interactive-tap {
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transform-origin: center;
+}
+button:not(:disabled):active,
+[role="button"]:active,
+.interactive-tap:active {
+  transform: scale(0.97);
+}
+
+/* Modal Entrance Animation */
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-enter {
+  animation: modalEnter 200ms var(--ease-out) forwards;
+  transform-origin: center;
+}
+
+/* Drawer Entrance Animation */
+@keyframes drawerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-drawer-enter {
+  animation: drawerSlideUp 260ms var(--ease-drawer) forwards;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(44, 70, 54, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 70, 54, 0.45);
+}
+
+button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li, blockquote {
+  text-wrap: pretty;
+}
+
+.font-mono,
+table,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled),
+  [role="button"],
+  .interactive-tap,
+  .animate-modal-enter,
+  .animate-drawer-enter,
+  .glass-card {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

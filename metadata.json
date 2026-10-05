@@ -1,0 +1,6 @@
+{
+  "name": "KaziFinance - Business & Personal Financial OS",
+  "description": "A complete personal business operating system for unpredictable income, client jobs, product sales, savings, tithes, weekly financial discipline, and daily activity management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
